@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+catboost
+lightgbm
+torch
+shap
+pydantic
+python-multipart
