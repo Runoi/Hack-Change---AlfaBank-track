@@ -7,13 +7,12 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      # Прокидываем модели (чтобы обновлять их без пересборки образа)
+      
       - ./models:/app/models
       
-      # ИСПРАВЛЕНО: Прокидываем папку с CSV данными
-      # На хосте папка data -> В контейнере /app/data
+      
       - ./data:/app/data
     environment:
       - WORKERS=1
-      - PYTHONUNBUFFERED=1  # Чтобы логи в консоли появлялись сразу
+      - PYTHONUNBUFFERED=1  
     restart: always

@@ -3,7 +3,6 @@ from typing import List
 from .schemas import ClientFeatures, PredictionResponse, ClientListResponse
 from .inference import service
 from .data_manager import data_manager
-# Импортируем логику
 from .business_rules import generate_offers
 
 app = FastAPI(title="Alfa-Bank Income Prediction", version="1.0")
@@ -15,7 +14,6 @@ def predict_income(data: ClientFeatures):
     if "error" in result:
         raise HTTPException(status_code=503, detail=result["error"])
 
-    # Генерируем предложения
     offers = generate_offers(data.features, result["prediction"]) # type: ignore
 
     return {
@@ -23,7 +21,7 @@ def predict_income(data: ClientFeatures):
         "predicted_income": result["prediction"],
         "model_breakdown": result["breakdown"],
         "explainability": result["shap"],
-        "offers": offers # <-- Добавили
+        "offers": offers
     }
 
 @app.get("/ClientsList", response_model=ClientListResponse)
@@ -43,7 +41,6 @@ def analyze_client_by_id(client_id: int):
     if "error" in result:
         raise HTTPException(status_code=503, detail=result["error"])
 
-    # Генерируем предложения
     offers = generate_offers(features, result["prediction"]) # type: ignore
 
     return {
@@ -51,7 +48,7 @@ def analyze_client_by_id(client_id: int):
         "predicted_income": result["prediction"],
         "model_breakdown": result["breakdown"],
         "explainability": result["shap"],
-        "offers": offers # <-- Добавили
+        "offers": offers
     }
 
 @app.get("/health")
