@@ -3,13 +3,11 @@ from typing import List
 import os
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent
 
 class Paths(BaseModel):
-    
+
     raw_data: str = str(BASE_DIR / "data")
-    
     processed_data: str = str(BASE_DIR / "processed")
     
     submissions: str = str(BASE_DIR / "submissions")
@@ -25,28 +23,32 @@ class Columns(BaseModel):
     target: str = "target"
     weight: str = "w"
     drop: List[str] = [
-        "id", "target", "w", "incomeValue", "incomeValueCategory", "dt"
+        "id", "target", "w", "incomeValue", "incomeValueCategory", "dt",  "month"
     ]
 
 # --- ПАРАМЕТРЫ МОДЕЛЕЙ ---
 
 class CatBoostParams(BaseModel):
-    iterations: int = 6000
-    depth: int = 8  
+    iterations: int = 8000
+    depth: int = 6       
     learning_rate: float = 0.03
-    early_stopping: int = 500 
-    l2_leaf_reg: float = 3.0 
+    l2_leaf_reg: float = 3.0
+    early_stopping: int = 500
+    random_strength: float = 1.0 
+    bagging_temperature: float = 1.0
+    task_type: str = "GPU"
     loss_function: str = "MAE"
 
 class LightGBMParams(BaseModel):
-    num_leaves: int = 80
-    learning_rate: float = 0.03 
-    num_boost_round: int = 6000
-    stopping_rounds: int = 500
-    colsample_bytree: float = 0.8 
-    subsample: float = 0.8
-    reg_alpha: float = 0.1
-    reg_lambda: float = 0.1
+    num_leaves: int = 80            
+    learning_rate: float = 0.015    
+    num_boost_round: int = 10000    
+    stopping_rounds: int = 3000      
+    min_child_samples: int = 50     
+    colsample_bytree: float = 0.7   
+    subsample: float = 0.8         
+    reg_alpha: float = 0.1          
+    reg_lambda: float = 0.5         
     device: str = "gpu"
 
 class NNParams(BaseModel):  
@@ -56,12 +58,12 @@ class NNParams(BaseModel):
     weight_decay: float = 1e-4
     dropout: float = 0.1
     d_model: int = 512
-    num_blocks: int = 3            
+    num_blocks: int = 3  
+
 class EnsembleWeights(BaseModel):
     lgbm: float = 0.55
     catboost: float = 0.40
     nn: float = 0.05
-
 
 
 class PipelineConfig(BaseModel):
