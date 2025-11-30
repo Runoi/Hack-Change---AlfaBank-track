@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+    backend:
+      build:
+        context: ../ML-SERVICE 
+      ports:
+        - "8000:8000" 
+      volumes:
+      
+      - ../ML-SERVICE/models:/app/models 
+      
+      
+      - ../ML-SERVICE/data:/app/data 
+      environment:
+        - WORKERS=1
+        - PYTHONUNBUFFERED=1  
+      restart: always
+      container_name: alfa_ml_backend
+    
+  
+    frontend:
+      build:
+        context: ../frontend 
+      ports:
+        - "80:80" 
+      container_name: alfa_frontend
+      
+      depends_on:
+        - backend
