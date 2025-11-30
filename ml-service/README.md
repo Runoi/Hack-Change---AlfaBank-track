@@ -17,6 +17,8 @@
 *   `lgbm_artifacts.pkl` (список фичей)
 *   `catboost_artifacts.pkl`
 *   `model_nn_artifacts.pth` (веса нейросети)
+*   `features.json`
+
 
 Также положите тестовый датасет `hackathon_income_test.csv` в папку `ml_service/data/`.
 
