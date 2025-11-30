@@ -9,6 +9,7 @@ Alfa-Bank Hackathon: AI Income Prediction & Scoring
 
 ---
 <video controls src="sample_video.mp4" title="Sample"></video>
+
 ## 🌟 Ключевые особенности
 
 ### 🧠 1. Продвинутый ML-движок
