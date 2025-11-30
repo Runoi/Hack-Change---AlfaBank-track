@@ -1,6 +1,6 @@
 Alfa-Bank Hackathon: AI Income Prediction & Scoring
 
-(Временно) Артефакты для ml-service - https://drive.google.com/drive/folders/14mxwJX0ExoJqXAV3swYr-nXJcxErGz1W?usp=sharing
+
 
 > **Команда:** Финтехи
 > **Трек:** Моделирование дохода физических лиц
