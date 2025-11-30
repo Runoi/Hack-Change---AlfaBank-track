@@ -3,16 +3,15 @@ from typing import List
 import os
 from pathlib import Path
 
-# --- МАГИЯ ПУТЕЙ ---
-# Определяем корень проекта (где лежит этот config.py)
+
 BASE_DIR = Path(__file__).resolve().parent
 
 class Paths(BaseModel):
-    # Папка data лежит рядом с config.py
+    
     raw_data: str = str(BASE_DIR / "data")
-    # Папку processed создадим там же
+    
     processed_data: str = str(BASE_DIR / "processed")
-    # Сабмиты тоже рядом
+    
     submissions: str = str(BASE_DIR / "submissions")
 
 class Files(BaseModel):
@@ -32,47 +31,41 @@ class Columns(BaseModel):
 # --- ПАРАМЕТРЫ МОДЕЛЕЙ ---
 
 class CatBoostParams(BaseModel):
-    iterations: int = 8000
-    depth: int = 8        
-    learning_rate: float = 0.02
-    l2_leaf_reg: float = 3.0
-    early_stopping: int = 1000
-    random_strength: float = 1.0 
-    bagging_temperature: float = 1.0
-    task_type: str = "GPU"
+    iterations: int = 6000
+    depth: int = 8  
+    learning_rate: float = 0.03
+    early_stopping: int = 500 
+    l2_leaf_reg: float = 3.0 
     loss_function: str = "MAE"
 
 class LightGBMParams(BaseModel):
-    num_leaves: int = 80            # Больше листьев для 400+ фичей (было 64)
-    learning_rate: float = 0.015    # Медленнее и точнее (было 0.05)
-    num_boost_round: int = 10000    # Увеличили итерации
-    stopping_rounds: int = 500      # Терпение
-    min_child_samples: int = 50     # Защита от выбросов в листьях
-    colsample_bytree: float = 0.7   # Берем 70% фичей на дерево (важно для многих колонок!)
-    subsample: float = 0.8          # Берем 80% строк на дерево
-    reg_alpha: float = 0.1          # L1 регуляризация
-    reg_lambda: float = 0.5         # L2 регуляризация
+    num_leaves: int = 80
+    learning_rate: float = 0.03 
+    num_boost_round: int = 6000
+    stopping_rounds: int = 500
+    colsample_bytree: float = 0.8 
+    subsample: float = 0.8
+    reg_alpha: float = 0.1
+    reg_lambda: float = 0.1
     device: str = "gpu"
 
-class NNParams(BaseModel):
+class NNParams(BaseModel):  
     epochs: int = 40
-    batch_size: int = 1024          # Большой батч стабилизирует градиенты
-    max_lr: float = 0.003           # Чуть тише старт (было 0.004)
-    weight_decay: float = 1e-3      # Сильнее давим веса (было 1e-4)
-    dropout: float = 0.15           # Чуть больше дропаута (было 0.1)
-    d_model: int = 512              # Широкие слои
-    num_blocks: int = 3             # 3 блока оптимально для 80к строк (4 может быть много)
-
+    batch_size: int = 1024
+    max_lr: float = 0.004
+    weight_decay: float = 1e-4
+    dropout: float = 0.1
+    d_model: int = 512
+    num_blocks: int = 3            
 class EnsembleWeights(BaseModel):
-    # LGBM сильнее, CatBoost стабильнее
     lgbm: float = 0.55
     catboost: float = 0.40
     nn: float = 0.05
 
-# --- ГЛАВНЫЙ ОБЪЕКТ ---
+
 
 class PipelineConfig(BaseModel):
-    seed: int = 14112001
+    seed: int = 42
     folds: int = 5
     
     paths: Paths = Paths()
@@ -100,5 +93,5 @@ class PipelineConfig(BaseModel):
     def get_submission_path(self, filename: str) -> str:
         return os.path.join(self.paths.submissions, filename)
 
-# Экспорт
+
 cfg = PipelineConfig()
