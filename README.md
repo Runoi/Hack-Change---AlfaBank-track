@@ -104,6 +104,8 @@ python run_pipeline.py
 
 *   **Селезнёв Роман(Runoi)** — Data Scientist (ML Pipeline, Feature Engineering)
 *   **Селезнёв Роман(Runoi)** — Backend Developer (FastAPI, Docker, Architecture)
-*   **Арам Казарян** — Frontend Developer (UI/UX, Visuals)
+*   **Арам Казарян** — Frontend Developer 
+*   **Колодий Илья** — UI/UX Дизайнер
+*   **Ли Александр** — Фин.Аналитик
 
 Мы превращаем данные в деньги и лояльность клиентов. 🚀
