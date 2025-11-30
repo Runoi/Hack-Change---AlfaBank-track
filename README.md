@@ -56,12 +56,12 @@ Alfa-Bank Hackathon: AI Income Prediction & Scoring
 
 ### 2. Запуск контейнера
 ```bash
-cd ml-service
+cd frontend
 docker-compose up --build -d
 ```
 
 ### 3. Тестирование API
-Сервис доступен по адресу: **http://localhost:8000**
+Сервис доступен по адресу: **http://localhost:8000** и frontend: http://localhost:80
 
 *   📄 **Документация (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs)
 *   🧠 **Анализ клиента:** `POST /predict`
